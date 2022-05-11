@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <title>Filter page</title>
+        <style>
+            body
+            {
+              background-color: #C4A484; 
+               color: #505444;
+               
+            }
+          .heading {
+                font-family: Daisy Regular;
+               font-size: 100px;
+               text-align: center;
+               margin-top: 30px;
+               color: #404337;
+
+            }
+            canvas
+            {
+                width: 1080px;
+                height: 720px;
+                border: 1px solid #c3c3c3;
+                background-color: #ffffff;
+            }
+        </style>
+        
+        <script type="text/javascript" src="https://www.dukelearntoprogram.com/course1/common/js/cs101/cs101.js"></script>
+        <script type="text/javascript" src="https://www.dukelearntoprogram.com/course1/common/js/cs101/SimpleImage.js"></script>
+        <script src="image_editor.js"></script>
+        <link rel="stylesheet" href="stylesheetmain.css"/>
+
+        
+        <script>
+            var img;
+            var temp=0;
+
+            function upload()
+            {
+                var imgcanvas= document.getElementById("can");
+                var fileinput= document.getElementById("finput");
+                img=new SimpleImage(fileinput);
+                img.drawTo(imgcanvas);
+                temp=1;
+            }
+
+            function tofilter()
+         {
+            for(var pixel of img.values())
+            {
+               if(pixel.getBlue()>100 && pixel.getBlue()>(pixel.getRed()+pixel.getGreen()))
+               {
+                
+               }
+               else
+               {
+                  var avg= (pixel.getRed()+pixel.getGreen()+pixel.getBlue())/3;
+                  pixel.setRed(avg);
+                  pixel.setGreen(avg);
+                  pixel.setBlue(avg);
+               }
+            }
+        
+    
+
+                    var w = img.getWidth();
+                    for(var pixel of img.values()) {
+                        if(pixel.getX() <45 || pixel.getX()>=w-45) {
+                            pixel.setRed(0);
+                            pixel.setGreen(0);
+                            pixel.setBlue(0);
+                        }   
+                    function blur() {           
+                    document.getElementById("temp").style.filter = "blur(10Px)";      }                  
+
+                }
+
+                var imgcanvas= document.getElementById("can2");
+                img.drawTo(imgcanvas);
+                temp=0;
+                document.getElementById("temp").innerHTML="";
+            }
+            
+        </script>
+    </head>
+
+    <body>
+
+        <div class="nav-bar">
+            <ul>
+                
+                <li><a href="Filter page1.html">FILTER</a></li>
+                <li><a href="About page.html">ABOUT</a> </li>
+                <li><a href="index.html">HOME</a></li></ul> </div>
+               
+            
+            <h1 class="heading">AZUL</h1>
+            <h3>To use the filter, upload your image and choose "Apply Filter" to run the filter on your chosen image</h3>
+            <h2>Upload image here</h2>
+        <p><input type="file" id="finput" onchange="upload()"/></p>
+        <div><canvas id="can"></canvas></div>
+        <p id="temp"></p>
+
+        <br><br>
+
+        <h2>Click here to Apply filter</h2>
+        <p><input type="button" value="Apply filter" onclick="tofilter()" download/></p>
+        <div><canvas id="can2"></canvas></div>
+    </body>
+</html>

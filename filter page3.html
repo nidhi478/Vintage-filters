@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <title>Filter page</title>
+        <style>
+            body
+            {
+              background-color: #C4A484; 
+               color: #505444;
+               
+            }
+          .heading {
+                font-family: Daisy Regular;
+               font-size: 100px;
+               text-align: center;
+               margin-top: 30px;
+               color: #404337;
+
+            }
+            canvas
+            {
+                width: 1080px;
+                height: 720px;
+                border: 1px solid #c3c3c3;
+                background-color: #ffffff;
+            }
+        </style>
+        
+        <script type="text/javascript" src="https://www.dukelearntoprogram.com/course1/common/js/cs101/cs101.js"></script>
+        <script type="text/javascript" src="https://www.dukelearntoprogram.com/course1/common/js/cs101/SimpleImage.js"></script>
+        <script src="image_editor.js"></script>
+        <link rel="stylesheet" href="stylesheetmain.css"/>
+
+        
+        <script>
+            var img;
+            var temp=0;
+
+            function upload()
+            {
+                var imgcanvas= document.getElementById("can");
+                var fileinput= document.getElementById("finput");
+                img=new SimpleImage(fileinput);
+                img.drawTo(imgcanvas);
+                temp=1;
+            }
+
+            function tosepia()
+            {
+                if(temp==0)
+                {
+                    document.getElementById("temp").innerHTML="Upload image here";  
+                }
+                else {
+                    for (var pixel of img.values()) {
+
+                    var sr= 0.393*(pixel.getRed())+ 0.769*(pixel.getGreen())+ 0.189*(pixel.getBlue());
+
+                    var sg= 0.349*(pixel.getRed())+ 0.686*(pixel.getGreen())+ 0.168*(pixel.getBlue());
+
+                    var sb= 0.272*(pixel.getRed())+ 0.534*(pixel.getGreen())+ 0.131*(pixel.getBlue());
+
+
+
+                    if (sr>255)
+
+                    {
+
+                        pixel.setRed(255);
+
+                    }
+
+                    else {
+
+                        pixel.setRed(sr);
+
+                    }
+
+
+
+                    if (sg>255)
+
+                    {
+
+                        pixel.setGreen(255);
+
+                    }
+
+                    else {
+
+                        pixel.setGreen(sg);
+
+                    }
+
+                    if (sb>255)
+
+                    {
+
+                        pixel.setBlue(255);
+
+                    }
+
+                    else {
+
+                        pixel.setBlue(sb);
+
+                    }}
+        
+    
+
+                    var w = img.getWidth();
+                    for(var pixel of img.values()) {
+                        if(pixel.getX() <45 || pixel.getX()>=w-45) {
+                            pixel.setRed(0);
+                            pixel.setGreen(0);
+                            pixel.setBlue(0);
+                        }   
+                                    
+
+                }
+
+                var imgcanvas= document.getElementById("can2");
+                img.drawTo(imgcanvas);
+                temp=0;
+                document.getElementById("temp").innerHTML="";
+            }
+        }
+            
+        </script>
+    </head>
+
+    <body>
+
+        <div class="nav-bar">
+            <ul>
+                
+                <li><a href="Filter page.html">FILTER</a></li>
+                <li><a href="About page.html">ABOUT</a> </li>
+                <li><a href="index.html">HOME</a></li></ul> </div>
+               
+            
+            <h1 class="heading">VINTAGE IMAGE FILTER</h1>
+            <h4>To use the filter, upload your image and choose "Apply Filter" to run the filter on your chosen image</h4>
+            <h2>Upload image here</h2>
+        <p><input type="file" id="finput" onchange="upload()"/></p>
+        <div><canvas id="can"></canvas></div>
+        <p id="temp"></p>
+
+        <br><br>
+
+        <h2>Click here to Apply filter</h2>
+        <p><input type="button" value="Apply filter" onclick="tosepia()" download/></p>
+        <div><canvas id="can2"></canvas></div>
+    </body>
+</html>
